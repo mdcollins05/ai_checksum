@@ -10,6 +10,16 @@ In the past, I've wanted to adjust the power level of a color channel in a sched
 
 ## That's nice but how do I use this thing?
 
+### Dependencies
+
+This relies on numpy to run, so be sure to install that.
+
+```
+pip3 install numpy
+```
+
+### Run it
+
 Simply point it to your `.aip` file via the command line and it'll generate the new checksum for you. You'll need to modify the file to include the new checksum.
 
 ```
