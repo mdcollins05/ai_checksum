@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-import re
-import numpy
 import argparse
+import re
+
+import numpy
 
 # original function copied from http://thereefuge.com/threads/reverse-engineering-a-hydra-26-hd.15524/
 # Converted from (node)JS
@@ -28,27 +29,35 @@ import argparse
 # };
 
 
-parser = argparse.ArgumentParser(description="Calculate an AIP schedule checksum and print it out.")
-parser.add_argument("--schedule", "-s", help="The AIP schedule file to calculate the checksum for.")
+parser = argparse.ArgumentParser(
+    description="Calculate an AIP schedule checksum and print it out."
+)
+parser.add_argument(
+    "--schedule", "-s", help="The AIP schedule file to calculate the checksum for."
+)
 args = parser.parse_args()
 
-aip_file_handler = open(args.schedule,"r")
+aip_file_handler = open(args.schedule, "r")
 aip_file = aip_file_handler.read()
 aip_file_handler.close()
 
-results = re.search(r"(<colors>.+?<\/colors>)", aip_file, flags=re.MULTILINE|re.DOTALL)
-results_group = results.group(1) # There shouldn't be more than one match so we only grab the first
+results = re.search(
+    r"(<colors>.+?<\/colors>)", aip_file, flags=re.MULTILINE | re.DOTALL
+)
+results_group = results.group(
+    1
+)  # There shouldn't be more than one match so we only grab the first
 results_text = re.sub(r"(\r\n|\n|\r|\s+)", "", results_group, flags=re.MULTILINE)
 
 checksum = numpy.int32(0)
 
 for char in results_text:
     charCode = ord(char)
-    #print("{} = {}".format(char, charCode))
+    # print("{} = {}".format(char, charCode))
     checksum = numpy.int32(((numpy.left_shift(checksum, 5) - checksum) + charCode))
-    #print(checksum)
+    # print(checksum)
     checksum = numpy.int32(numpy.bitwise_and(checksum, 4294967295))
-    #print(checksum)
+    # print(checksum)
 
 if checksum < 0:
     checksum = numpy.int32((numpy.invert(checksum)))
