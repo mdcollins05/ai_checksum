@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v6.0.0
     hooks:
       - id: check-merge-conflict
       - id: end-of-file-fixer
@@ -11,11 +11,11 @@ repos:
     hooks:
       - id: python-import-sorter
         args: ['--silent-overwrite']
-  - repo: https://github.com/psf/black
-    rev: 19.3b0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 26.5.1
     hooks:
       - id: black
   - repo: https://github.com/asottile/blacken-docs
-    rev: v1.3.0
+    rev: 1.20.0
     hooks:
       - id: blacken-docs
